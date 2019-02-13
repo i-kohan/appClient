@@ -12,7 +12,7 @@ import {
   ClickAwayListener,
   withStyles,
 } from '@material-ui/core'
-import { 
+import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
   MoveToInbox as InboxIcon,
@@ -58,7 +58,12 @@ const styles = theme => ({
   // },
 })
 
-const MainMenu = ({ classes, theme, isMenuOpen, handleMenuClose }) => (
+const MainMenu = ({
+  classes,
+  theme,
+  isMenuOpen,
+  handleMenuClose,
+}) => (
   <ClickAwayListener onClickAway={handleMenuClose}>
     <Drawer
       variant="permanent"
@@ -74,29 +79,29 @@ const MainMenu = ({ classes, theme, isMenuOpen, handleMenuClose }) => (
       }}
       open={isMenuOpen}
     >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleMenuClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+      <div className={classes.toolbar}>
+        <IconButton onClick={handleMenuClose}>
+          {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        </IconButton>
+      </div>
+      <Divider />
+      <List>
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
     </Drawer>
   </ClickAwayListener>
 
@@ -110,4 +115,3 @@ MainMenu.propTypes = {
 }
 
 export default withStyles(styles, { withTheme: true })(MainMenu)
-

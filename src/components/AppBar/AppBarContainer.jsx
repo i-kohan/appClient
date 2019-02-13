@@ -1,18 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import AppBar from './AppBar'
 import {
   compose,
   withState,
   withHandlers,
 } from 'recompose'
+import AppBar from './AppBar'
 
 const AppBarContainer = ({
   isMenuOpen,
   handleMenuClose,
   handleMenuToggle,
 }) => (
-  <AppBar 
+  <AppBar
     isMenuOpen={isMenuOpen}
     handleMenuClose={handleMenuClose}
     handleMenuToggle={handleMenuToggle}
