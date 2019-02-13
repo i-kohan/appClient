@@ -1,11 +1,23 @@
 {
-  "name": "graphql-clien",
+  "name": "graphql-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "apollo-boost": "^0.1.27",
+    "classnames": "^2.2.6",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "pose": "^2.3.1",
+    "prop-types": "^15.7.1",
     "react": "^16.8.1",
+    "react-apollo": "^2.4.1",
     "react-dom": "^16.8.1",
-    "react-scripts": "2.1.5"
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.5",
+    "recompose": "^0.30.0",
+    "storybook": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,5 +33,11 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4"
+  }
 }
