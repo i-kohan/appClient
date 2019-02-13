@@ -6,18 +6,14 @@ import {
   List,
   Divider,
   IconButton,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   ClickAwayListener,
   withStyles,
 } from '@material-ui/core'
 import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
-  MoveToInbox as InboxIcon,
-  Mail as MailIcon,
 } from '@material-ui/icons'
+import MainMenuItem from './MainMenuItem'
 
 const drawerWidth = 240
 
@@ -58,60 +54,63 @@ const styles = theme => ({
   // },
 })
 
+const buildMenuItems = menuItem => (
+  <MainMenuItem menuItem={menuItem} />
+)
+
 const MainMenu = ({
   classes,
   theme,
   isMenuOpen,
   handleMenuClose,
-}) => (
-  <ClickAwayListener onClickAway={handleMenuClose}>
-    <Drawer
-      variant="permanent"
-      className={classNames(classes.drawer, {
-        [classes.drawerOpen]: isMenuOpen,
-        [classes.drawerClose]: !isMenuOpen,
-      })}
-      classes={{
-        paper: classNames({
+  menuItems,
+  loading,
+}) => {
+  if (loading) {
+    return null
+  }
+  return (
+    <ClickAwayListener onClickAway={handleMenuClose}>
+      <Drawer
+        variant="permanent"
+        className={classNames(classes.drawer, {
           [classes.drawerOpen]: isMenuOpen,
           [classes.drawerClose]: !isMenuOpen,
-        }),
-      }}
-      open={isMenuOpen}
-    >
-      <div className={classes.toolbar}>
-        <IconButton onClick={handleMenuClose}>
-          {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-        </IconButton>
-      </div>
-      <Divider />
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </Drawer>
-  </ClickAwayListener>
-
-)
+        })}
+        classes={{
+          paper: classNames({
+            [classes.drawerOpen]: isMenuOpen,
+            [classes.drawerClose]: !isMenuOpen,
+          }),
+        }}
+        open={isMenuOpen}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleMenuClose}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {menuItems.map(buildMenuItems)}
+        </List>
+      </Drawer>
+    </ClickAwayListener>
+  )
+}
 
 MainMenu.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   theme: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isMenuOpen: PropTypes.bool.isRequired,
   handleMenuClose: PropTypes.func.isRequired,
+  menuItems: PropTypes.arrayOf(PropTypes.objectOf({
+    id: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    iconName: PropTypes.string.isRequired,
+  })).isRequired,
+  loading: PropTypes.bool.isRequired,
 }
 
 export default withStyles(styles, { withTheme: true })(MainMenu)
