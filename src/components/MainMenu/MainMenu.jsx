@@ -55,7 +55,7 @@ const styles = theme => ({
 })
 
 const buildMenuItems = menuItem => (
-  <MainMenuItem menuItem={menuItem} />
+  <MainMenuItem key={menuItem.id} menuItem={menuItem} />
 )
 
 const MainMenu = ({
@@ -64,40 +64,35 @@ const MainMenu = ({
   isMenuOpen,
   handleMenuClose,
   menuItems,
-  loading,
-}) => {
-  if (loading) {
-    return null
-  }
-  return (
-    <ClickAwayListener onClickAway={handleMenuClose}>
-      <Drawer
-        variant="permanent"
-        className={classNames(classes.drawer, {
+}) => (
+  <ClickAwayListener onClickAway={handleMenuClose}>
+    <Drawer
+      variant="permanent"
+      className={classNames(classes.drawer, {
+        [classes.drawerOpen]: isMenuOpen,
+        [classes.drawerClose]: !isMenuOpen,
+      })}
+      classes={{
+        paper: classNames({
           [classes.drawerOpen]: isMenuOpen,
           [classes.drawerClose]: !isMenuOpen,
-        })}
-        classes={{
-          paper: classNames({
-            [classes.drawerOpen]: isMenuOpen,
-            [classes.drawerClose]: !isMenuOpen,
-          }),
-        }}
-        open={isMenuOpen}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleMenuClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {menuItems.map(buildMenuItems)}
-        </List>
-      </Drawer>
-    </ClickAwayListener>
-  )
-}
+        }),
+      }}
+      open={isMenuOpen}
+    >
+      <div className={classes.toolbar}>
+        <IconButton onClick={handleMenuClose}>
+          {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        </IconButton>
+      </div>
+      <Divider />
+      <List>
+        {menuItems.map(buildMenuItems)}
+      </List>
+    </Drawer>
+  </ClickAwayListener>
+)
+
 
 MainMenu.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -109,8 +104,8 @@ MainMenu.propTypes = {
     path: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     iconName: PropTypes.string.isRequired,
+    __typename: PropTypes.string.isRequired,
   })).isRequired,
-  loading: PropTypes.bool.isRequired,
 }
 
 export default withStyles(styles, { withTheme: true })(MainMenu)

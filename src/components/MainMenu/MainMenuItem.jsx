@@ -10,7 +10,6 @@ import {
 
 const MainMenuItem = ({
   menuItem: {
-    id,
     path,
     title,
     iconName,
@@ -22,7 +21,6 @@ const MainMenuItem = ({
 }) => (
   <ListItem
     button
-    key={id}
     onClick={() => history.push(path)}
     selected={pathname === path}
   >
@@ -39,6 +37,7 @@ MainMenuItem.propTypes = {
     path: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     iconName: PropTypes.string.isRequired,
+    __typename: PropTypes.string.isRequired,
   }).isRequired,
   history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   location: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

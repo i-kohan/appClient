@@ -1,27 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Query } from 'react-apollo'
-
 import MainMenu from './MainMenu'
+import { withQuery } from '../../graphql/hocs'
 import { menuItems } from '../../graphql/queries'
 
 
-const MainMenuContainer = ({ isMenuOpen, handleMenuClose }) => (
-  <Query query={menuItems}>
-    {({ loading, data }) => (
-      <MainMenu
-        loading={loading}
-        menuItems={data.menuItems}
-        isMenuOpen={isMenuOpen}
-        handleMenuClose={handleMenuClose}
-      />
-    )}
-  </Query>
+const MainMenuContainer = ({ isMenuOpen, handleMenuClose, data }) => (
+  <MainMenu
+    menuItems={data.menuItems}
+    isMenuOpen={isMenuOpen}
+    handleMenuClose={handleMenuClose}
+  />
 )
 
 MainMenuContainer.propTypes = {
   isMenuOpen: PropTypes.bool.isRequired,
   handleMenuClose: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 }
 
-export default MainMenuContainer
+export default withQuery({ query: menuItems })(MainMenuContainer)
