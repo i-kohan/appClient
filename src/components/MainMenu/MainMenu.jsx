@@ -48,10 +48,6 @@ const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
-  // content: {
-  //   flexGrow: 1,
-  //   padding: theme.spacing.unit * 3,
-  // },
 })
 
 const buildMenuItems = menuItem => (
@@ -93,6 +89,9 @@ const MainMenu = ({
   </ClickAwayListener>
 )
 
+MainMenu.defaultProps = {
+  menuItems: [],
+}
 
 MainMenu.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -105,7 +104,7 @@ MainMenu.propTypes = {
     title: PropTypes.string.isRequired,
     iconName: PropTypes.string.isRequired,
     __typename: PropTypes.string.isRequired,
-  })).isRequired,
+  })),
 }
 
 export default withStyles(styles, { withTheme: true })(MainMenu)

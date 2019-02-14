@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {
-  AppBar as AppBarMaterial,
+  AppBar as AppBarMaterialUI,
   Toolbar,
   IconButton,
   CssBaseline,
@@ -49,7 +49,7 @@ const AppBar = ({
 }) => (
   <div className={classes.root}>
     <CssBaseline />
-    <AppBarMaterial
+    <AppBarMaterialUI
       position="fixed"
       className={classNames(classes.appBar, {
         [classes.appBarShift]: isMenuOpen,
@@ -67,7 +67,7 @@ const AppBar = ({
           <MenuIcon />
         </IconButton>
       </Toolbar>
-    </AppBarMaterial>
+    </AppBarMaterialUI>
     <MainMenu
       isMenuOpen={isMenuOpen}
       handleMenuClose={handleMenuClose}
