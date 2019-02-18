@@ -7,6 +7,7 @@ import {
   Divider,
   IconButton,
   ClickAwayListener,
+  Typography,
   withStyles,
 } from '@material-ui/core'
 import {
@@ -44,7 +45,7 @@ const styles = theme => ({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
@@ -77,6 +78,7 @@ const MainMenu = ({
       open={isMenuOpen}
     >
       <div className={classes.toolbar}>
+        <Typography variant="h4">Navigation</Typography>
         <IconButton onClick={handleMenuClose}>
           {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton>
@@ -89,22 +91,18 @@ const MainMenu = ({
   </ClickAwayListener>
 )
 
-MainMenu.defaultProps = {
-  menuItems: [],
-}
-
 MainMenu.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   theme: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isMenuOpen: PropTypes.bool.isRequired,
   handleMenuClose: PropTypes.func.isRequired,
-  menuItems: PropTypes.arrayOf(PropTypes.objectOf({
+  menuItems: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     iconName: PropTypes.string.isRequired,
     __typename: PropTypes.string.isRequired,
-  })),
+  })).isRequired,
 }
 
 export default withStyles(styles, { withTheme: true })(MainMenu)

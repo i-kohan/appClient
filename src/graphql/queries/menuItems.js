@@ -7,6 +7,7 @@ export default gql`
     title
     path
     iconName
+    isPublic
   }
 }
 `
