@@ -53,7 +53,6 @@ const styles = theme => ({
 
 const AppBar = ({
   history,
-  isLoggedIn,
   classes,
   isMenuOpen,
   handleMenuClose,
@@ -70,25 +69,23 @@ const AppBar = ({
       })}
     >
       <Toolbar disableGutters={!isMenuOpen}>
-        {isLoggedIn && (
-          <IconButton
-            disabled={loading}
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={handleMenuToggle}
-            className={classNames(classes.menuButton, {
-              [classes.hide]: isMenuOpen,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-        )}
+        <IconButton
+          disabled={loading}
+          color="inherit"
+          aria-label="Open drawer"
+          onClick={handleMenuToggle}
+          className={classNames(classes.menuButton, {
+            [classes.hide]: isMenuOpen,
+          })}
+        >
+          <MenuIcon />
+        </IconButton>
         <Button
-          onClick={() => history.push(isLoggedIn ? '/logout' : '/login')}
+          onClick={() => history.push('/logout')}
           color="secondary"
           className={classes.loginButton}
         >
-          {isLoggedIn ? 'Logout' : 'Login'}
+          Logout
         </Button>
       </Toolbar>
     </AppBarMaterialUI>
@@ -96,14 +93,12 @@ const AppBar = ({
       menuItems={data.menuItems}
       isMenuOpen={isMenuOpen}
       handleMenuClose={handleMenuClose}
-      isLoggedIn={isLoggedIn}
     />
   </div>
 )
 
 
 AppBar.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   history: PropTypes.object.isRequired, // eslint-disable-line
   isMenuOpen: PropTypes.bool.isRequired,

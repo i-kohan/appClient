@@ -14,11 +14,9 @@ const AppBarContainer = ({
   handleMenuClose,
   handleMenuToggle,
   loading,
-  isLoggedIn,
   data,
 }) => (
   <AppBar
-    isLoggedIn={isLoggedIn}
     data={data}
     loading={loading}
     isMenuOpen={isMenuOpen}
@@ -28,7 +26,6 @@ const AppBarContainer = ({
 )
 
 AppBarContainer.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   isMenuOpen: PropTypes.bool.isRequired,
   handleMenuClose: PropTypes.func.isRequired,

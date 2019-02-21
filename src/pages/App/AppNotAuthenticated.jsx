@@ -1,3 +1,8 @@
 import React from 'react'
+import { PublicRoutes } from '../../router'
 
-export default () => <h1>Not Authenticated</h1>
+const AppNotAuthenticated = () => (
+  <PublicRoutes />
+)
+
+export default AppNotAuthenticated
