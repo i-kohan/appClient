@@ -1,3 +1,4 @@
 import React from 'react'
+import LoginPage from './LoginPage'
 
-export default () => <h1>Login</h1>
+export default LoginPage

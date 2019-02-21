@@ -5,7 +5,7 @@ export default gql`
   exercises {
     name
     description
-    id
+    _id
   }
 }
 `

@@ -6,7 +6,7 @@ export default gql`
       jwt
       username
       email
-      id
+      _id
     }
   }
 `
