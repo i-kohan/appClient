@@ -1,5 +1,5 @@
 import React from 'react'
-import { Query } from 'react-apollo'
+import { Mutation } from 'react-apollo'
 import { withStyles } from '@material-ui/core'
 import { compose } from 'recompose'
 import { Message, Loading } from '../../components'
@@ -12,9 +12,9 @@ const styles = () => ({
   },
 })
 
-const withQuery = ({ query }) => WrappedComponent => props => (
-  <Query query={query}>
-    {({ loading, error, data = {} }) => (
+const withMutation = ({ mutation, variables }) => WrappedComponent => props => (
+  <Mutation mutation={mutation} variables={variables}>
+    {(mutate, { data, loading, error }) => (
       <>
         {loading && (
           <Loading
@@ -31,6 +31,7 @@ const withQuery = ({ query }) => WrappedComponent => props => (
           />
         )}
         <WrappedComponent
+          mutate={mutate}
           loading={loading}
           error={error}
           data={data}
@@ -38,10 +39,10 @@ const withQuery = ({ query }) => WrappedComponent => props => (
         />
       </>
     )}
-  </Query>
+  </Mutation>
 )
 
-export default ({ query }) => component => compose(
+export default ({ mutation, variables }) => component => compose(
   withStyles(styles),
-  withQuery({ query }),
+  withMutation({ mutation, variables }),
 )(component)
