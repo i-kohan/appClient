@@ -41,7 +41,7 @@ const MainMenuItem = ({
 
 MainMenuItem.propTypes = {
   menuItem: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     iconName: PropTypes.string.isRequired,

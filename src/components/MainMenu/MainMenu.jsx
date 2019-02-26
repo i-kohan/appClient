@@ -52,7 +52,7 @@ const styles = theme => ({
 })
 
 const buildMenuItems = menuItem => (
-  <MainMenuItem key={menuItem.id} menuItem={menuItem} />
+  <MainMenuItem key={menuItem._id} menuItem={menuItem} />
 )
 
 const MainMenu = ({
@@ -97,7 +97,7 @@ MainMenu.propTypes = {
   isMenuOpen: PropTypes.bool.isRequired,
   handleMenuClose: PropTypes.func.isRequired,
   menuItems: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     iconName: PropTypes.string.isRequired,
