@@ -46,8 +46,14 @@ const styles = theme => ({
 })
 
 function SignIn(props) {
-  const { classes } = props
-
+  const {
+    classes,
+    username,
+    password,
+    onUsernameChange,
+    onPasswordChange,
+    onLogin,
+  } = props
   return (
     <main className={classes.main}>
       <CssBaseline />
@@ -58,29 +64,41 @@ function SignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form}>
+        <div className={classes.form}>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
+            <InputLabel>Username</InputLabel>
+            <Input
+              id="email"
+              name="username"
+              autoFocus
+              value={username}
+              onChange={({ target }) => onUsernameChange(target.value)}
+            />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
+            <InputLabel>Password</InputLabel>
+            <Input
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={({ target }) => onPasswordChange(target.value)}
+            />
           </FormControl>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={() => onLogin(username, password)}
           >
             Sign in
           </Button>
-        </form>
+        </div>
       </Paper>
     </main>
   )

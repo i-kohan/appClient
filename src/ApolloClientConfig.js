@@ -16,7 +16,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message, locations, path }) => console.log('Error'))
   }
-  if (networkError) console.log(`[Network error]: ${networkError}`)
+  if (networkError) {
+    console.log(`[Network error]: ${networkError}`)
+  }
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -27,7 +29,7 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       // authorization: token ? `Bearer ${token}` : '',
-      authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzZlNzI1NzJkY2YyZTM3OTNlM2NiNWQiLCJpYXQiOjE1NTA3NTU2MDd9.Qs3x-4ZRyxtw58QBzNYIdfckySergm-8oxNEWddfvjw',
+      authorization: `Bearer ${token}`,
     },
   }
 })
