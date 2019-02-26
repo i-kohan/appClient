@@ -52,11 +52,11 @@ const styles = theme => ({
 })
 
 const AppBar = ({
-  history,
   classes,
   isMenuOpen,
   handleMenuClose,
   handleMenuToggle,
+  handleLogout,
   loading,
   data,
 }) => (
@@ -81,7 +81,7 @@ const AppBar = ({
           <MenuIcon />
         </IconButton>
         <Button
-          onClick={() => history.push('/logout')}
+          onClick={handleLogout}
           color="secondary"
           className={classes.loginButton}
         >
@@ -104,6 +104,7 @@ AppBar.propTypes = {
   isMenuOpen: PropTypes.bool.isRequired,
   handleMenuClose: PropTypes.func.isRequired,
   handleMenuToggle: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     menuItems: PropTypes.arrayOf(PropTypes.shape({

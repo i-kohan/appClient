@@ -14,7 +14,12 @@ const styles = () => ({
 
 const withQuery = ({ query }) => WrappedComponent => props => (
   <Query query={query}>
-    {({ loading, error, data = {} }) => (
+    {({
+      loading,
+      error,
+      client,
+      data = {},
+    }) => (
       <>
         {loading && (
           <Loading
@@ -34,6 +39,7 @@ const withQuery = ({ query }) => WrappedComponent => props => (
           loading={loading}
           error={error}
           data={data}
+          client={client}
           {...props}
         />
       </>

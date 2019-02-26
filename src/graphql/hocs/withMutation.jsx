@@ -1,5 +1,5 @@
 import React from 'react'
-import { Mutation, ApolloConsumer } from 'react-apollo'
+import { Mutation } from 'react-apollo'
 import { withStyles } from '@material-ui/core'
 import { compose } from 'recompose'
 import { Message, Loading } from '../../components'
@@ -19,43 +19,44 @@ const withMutation = ({
   refetchQueries,
   update,
 }) => WrappedComponent => props => (
-  <ApolloConsumer>
-    {client => (
-      <Mutation
-        mutation={mutation}
-        variables={variables}
-        onCompleted={onCompleted}
-        update={update}
-        refetchQueries={refetchQueries}
-      >
-        {(mutate, { data, loading, error }) => (
-          <>
-            {loading && (
-              <Loading
-                type="linear"
-                variant="query"
-                className={props.classes.progress} // eslint-disable-line
-              />
-            )}
-            {error && (
-              <Message
-                isOpen
-                message={error.message}
-                variant="error"
-              />
-            )}
-            <WrappedComponent
-              mutate={mutate}
-              loading={loading}
-              error={error}
-              data={data}
-              {...props}
-            />
-          </>
+  <Mutation
+    mutation={mutation}
+    variables={variables}
+    onCompleted={onCompleted}
+    update={update}
+    refetchQueries={refetchQueries}
+  >
+    {(mutate, {
+      data,
+      loading,
+      error,
+      // client,
+    }) => (
+      <>
+        {loading && (
+          <Loading
+            type="linear"
+            variant="query"
+            className={props.classes.progress} // eslint-disable-line
+          />
         )}
-      </Mutation>
+        {error && (
+          <Message
+            isOpen
+            message={error.message}
+            variant="error"
+          />
+        )}
+        <WrappedComponent
+          mutate={mutate}
+          loading={loading}
+          error={error}
+          data={data}
+          {...props}
+        />
+      </>
     )}
-  </ApolloConsumer>
+  </Mutation>
 )
 
 export default props => component => compose(

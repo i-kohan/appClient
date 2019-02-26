@@ -45,7 +45,7 @@ const styles = theme => ({
   },
 })
 
-function SignIn(props) {
+function LoginPage(props) {
   const {
     classes,
     username,
@@ -104,8 +104,13 @@ function SignIn(props) {
   )
 }
 
-SignIn.propTypes = {
+LoginPage.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  onUsernameChange: PropTypes.func.isRequired,
+  onPasswordChange: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(SignIn)
+export default withStyles(styles)(LoginPage)

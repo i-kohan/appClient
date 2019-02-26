@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { compose, withProps } from 'recompose'
 import { withMutation } from '../../graphql/hocs'
 import { login } from '../../graphql/mutations'
 import LoginPage from './LoginPage'
 import { currentUserQuery } from '../../graphql/queries'
 
-const Log = ({ mutate, loading, handleLogin }) => {
+const LoginPageContainer = ({ handleLogin, loading }) => {
   const [username, handleUsernameChange] = useState('')
   const [password, handlePasswordChange] = useState('')
   if (loading) {
     return 'Loading'
   }
+
   return (
     <LoginPage
       username={username}
@@ -18,7 +20,6 @@ const Log = ({ mutate, loading, handleLogin }) => {
       onUsernameChange={handleUsernameChange}
       onPasswordChange={handlePasswordChange}
       onLogin={handleLogin}
-      login={mutate}
     />
   )
 }
@@ -39,10 +40,15 @@ export default compose(
     mutation: login,
   }),
   withProps(props => ({
-    handleLogin: (username, password) => props.login({
+    handleLogin: (username, password) => props.mutate({
       variables: {
         input: { username, password },
       },
     }),
   })),
-)(Log)
+)(LoginPageContainer)
+
+LoginPageContainer.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+}

@@ -1,16 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core'
-import { Route, Redirect, withRouter, Router } from 'react-router-dom'
 import { compose } from 'recompose'
 import { AppBar } from './components'
 import { withQuery } from './graphql/hocs'
 import { currentUserQuery } from './graphql/queries'
 import {
-  LoginPage,
-  MainPage,
   AppAuthenticated,
-  AppNotAuthenticated
+  AppNotAuthenticated,
 } from './pages'
 
 const styles = theme => ({
@@ -37,11 +34,6 @@ const App = ({ classes, data: { currentUser }, loading }) => {
     </div>
   )
 }
-
-// <AppBar isLoggedIn={!!currentUser} />
-// <main className={classes.content}>
-//   <Routes isLoggedIn={!!currentUser} />
-// </main>
 
 App.propTypes = {
   data: PropTypes.shape({
