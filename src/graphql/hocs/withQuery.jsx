@@ -8,6 +8,7 @@ const styles = () => ({
   progress: {
     position: 'absolute',
     top: 70,
+    left: 'calc(50% - 40px)',
     width: '100%',
   },
 })
@@ -23,8 +24,7 @@ const withQuery = ({ query }) => WrappedComponent => props => (
       <>
         {loading && (
           <Loading
-            type="linear"
-            variant="query"
+            type="circular"
             className={props.classes.progress} // eslint-disable-line
           />
         )}

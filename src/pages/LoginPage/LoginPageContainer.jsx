@@ -6,12 +6,9 @@ import { login } from '../../graphql/mutations'
 import LoginPage from './LoginPage'
 import { currentUserQuery } from '../../graphql/queries'
 
-const LoginPageContainer = ({ handleLogin, loading }) => {
+const LoginPageContainer = ({ handleLogin }) => {
   const [username, handleUsernameChange] = useState('')
   const [password, handlePasswordChange] = useState('')
-  if (loading) {
-    return 'Loading'
-  }
 
   return (
     <LoginPage
@@ -50,5 +47,4 @@ export default compose(
 
 LoginPageContainer.propTypes = {
   handleLogin: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
 }

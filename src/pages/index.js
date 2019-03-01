@@ -4,3 +4,5 @@ export {
   AppAuthenticated,
   AppNotAuthenticated,
 } from './App'
+export { ExercisesPage } from './Exercises'
+export { ProgramsPage } from './ProgramsPage'

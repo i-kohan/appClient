@@ -27,13 +27,13 @@ const LoadingContainer = ({
 LoadingContainer.defaultProps = {
   className: '',
   type: 'circular',
-  variant: '',
+  variant: 'indeterminate',
 }
 
 LoadingContainer.propTypes = {
   className: PropTypes.string,
   type: PropTypes.oneOf(['circular', 'linear']),
-  variant: PropTypes.oneOf(['determinate', 'query', 'indeterminate', '']),
+  variant: PropTypes.oneOf(['determinate', 'query', 'indeterminate']),
 }
 
 export default LoadingContainer

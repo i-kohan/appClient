@@ -53,6 +53,7 @@ export default compose(
   withState('isMenuOpen', 'toggleMenu', false),
   withProps(props => ({
     handleLogout: () => {
+      localStorage.removeItem('token')
       props.client.writeQuery({
         query: currentUserQuery,
         data: {
