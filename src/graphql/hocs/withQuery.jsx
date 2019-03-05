@@ -2,7 +2,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import { withStyles } from '@material-ui/core'
 import { compose } from 'recompose'
-import { Message, Loading } from '../../components'
+import { Message } from '../../components'
 
 const styles = () => ({
   progress: {
@@ -13,21 +13,25 @@ const styles = () => ({
   },
 })
 
-const withQuery = ({ query }) => WrappedComponent => props => (
-  <Query query={query}>
+const withQuery = ({
+  query,
+  variables,
+  notifyOnNetworkStatusChange = false,
+}) => WrappedComponent => props => (
+  <Query
+    query={query}
+    variables={variables}
+    notifyOnNetworkStatusChange={notifyOnNetworkStatusChange}
+  >
     {({
       loading,
       error,
       client,
       data = {},
+      fetchMore,
+      networkStatus,
     }) => (
       <>
-        {loading && (
-          <Loading
-            type="circular"
-            className={props.classes.progress} // eslint-disable-line
-          />
-        )}
         {error && (
           <Message
             isOpen
@@ -36,18 +40,21 @@ const withQuery = ({ query }) => WrappedComponent => props => (
           />
         )}
         <WrappedComponent
+          networkStatus={networkStatus}
           loading={loading}
+          fetchMore={fetchMore}
           error={error}
           data={data}
           client={client}
           {...props}
         />
       </>
-    )}
+    )
+  }
   </Query>
 )
 
-export default ({ query }) => component => compose(
+export default props => component => compose(
   withStyles(styles),
-  withQuery({ query }),
+  withQuery(props),
 )(component)

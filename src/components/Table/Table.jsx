@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { compose } from 'recompose'
 import {
   withStyles,
   Paper,
@@ -11,6 +12,7 @@ import {
   TablePagination,
 } from '@material-ui/core'
 import TablePaginationContainer from './TablePaginationContainer'
+import { withLoading } from '../hocs'
 
 const styles = theme => ({
   root: {
@@ -25,11 +27,23 @@ const styles = theme => ({
   },
 })
 
+const buildRows = (rowsToShow, rows) => rows.map(row => (
+  <TableRow key={row._id}>
+    {rowsToShow.map(rts => (
+      <TableCell>
+        {row[rts]}
+      </TableCell>
+    ))}
+  </TableRow>
+))
+
 const Table = ({
   classes,
   rows,
   page,
   rowsPerPage,
+  rowsToShow,
+  count,
   emptyRows,
   handleChangePage,
   handleChangeRowsPerPage,
@@ -38,15 +52,7 @@ const Table = ({
     <div className={classes.tableWrapper}>
       <TableMaterial className={classes.table}>
         <TableBody>
-          {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-            </TableRow>
-          ))}
+          {buildRows(rowsToShow, rows)}
           {emptyRows > 0 && (
             <TableRow style={{ height: 48 * emptyRows }}>
               <TableCell colSpan={6} />
@@ -58,7 +64,7 @@ const Table = ({
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               colSpan={3}
-              count={rows.length}
+              count={count}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
@@ -76,19 +82,23 @@ const Table = ({
 )
 
 Table.defaultProps = {
-  page: 0,
-  rowsPerPage: 5,
   rows: [],
+  rowsToShow: [],
 }
 
 Table.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line
   rows: PropTypes.arrayOf(PropTypes.object),
-  page: PropTypes.number,
-  rowsPerPage: PropTypes.number,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  rowsToShow: PropTypes.arrayOf(PropTypes.string),
   emptyRows: PropTypes.number.isRequired,
   handleChangePage: PropTypes.func.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
 }
 
-export default withStyles(styles)(Table)
+export default compose(
+  withStyles(styles),
+  withLoading,
+)(Table)
