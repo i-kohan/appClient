@@ -2,6 +2,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import { withStyles } from '@material-ui/core'
 import { compose } from 'recompose'
+import PropTypes from 'prop-types'
 import { Message } from '../../components'
 
 const styles = () => ({
@@ -13,16 +14,14 @@ const styles = () => ({
   },
 })
 
-const withQuery = ({
-  query,
-  variables,
-  notifyOnNetworkStatusChange = false,
-}) => WrappedComponent => props => (
-  <Query
-    query={query}
-    variables={variables}
-    notifyOnNetworkStatusChange={notifyOnNetworkStatusChange}
-  >
+// withQueryProps = {
+//   query,
+//   variables,
+//   notifyOnNetworkStatusChange = false,
+// }
+
+const withQuery = queryProps => WrappedComponent => props => (
+  <Query {...queryProps}>
     {({
       loading,
       error,
@@ -30,26 +29,40 @@ const withQuery = ({
       data = {},
       fetchMore,
       networkStatus,
-    }) => (
-      <>
-        {error && (
-          <Message
-            isOpen
-            message={error.message}
-            variant="error"
-          />
-        )}
+    }) => {
+      const SubComponent = ({ accessor, ...restProps }) => (
         <WrappedComponent
           networkStatus={networkStatus}
           loading={loading}
           fetchMore={fetchMore}
           error={error}
-          data={data}
+          data={accessor ? data[accessor] || {} : data}
           client={client}
-          {...props}
+          {...restProps}
         />
-      </>
-    )
+      )
+
+      SubComponent.propTypes = {
+        accessor: PropTypes.string,
+      }
+
+      SubComponent.defaultProps = {
+        accessor: null,
+      }
+
+      return (
+        <>
+          {error && (
+            <Message
+              isOpen
+              message={error.message}
+              variant="error"
+            />
+          )}
+          <SubComponent {...props} />
+        </>
+      )
+    }
   }
   </Query>
 )

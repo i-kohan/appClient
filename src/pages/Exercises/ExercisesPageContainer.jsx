@@ -5,12 +5,11 @@ import { withQuery } from '../../graphql/hocs'
 import { exercises } from '../../graphql/queries'
 import ExercisesPage from './ExercisesPage'
 
-const ExercisesPageContainer = ({ data, loading, getPageData }) => (
+const ExercisesPageContainer = ({ data: { data, metadata }, loading, getPageData }) => (
   <ExercisesPage
     loading={loading}
-    exercises={data.exercises && data.exercises.exercises}
-    metadata={data.exercises && data.exercises.metadata}
-    count={data.exercises && data.exercises.count}
+    data={data}
+    metadata={metadata}
     getPageData={getPageData}
   />
 )
@@ -24,6 +23,9 @@ ExercisesPageContainer.propTypes = {
 }
 
 export default compose(
+  withProps({
+    accessor: 'exercises',
+  }),
   withQuery({
     query: exercises,
     notifyOnNetworkStatusChange: true,

@@ -28,9 +28,9 @@ const styles = theme => ({
 })
 
 const buildRows = (rowsToShow, rows) => rows.map(row => (
-  <TableRow key={row._id}>
+  <TableRow key={row.id}>
     {rowsToShow.map(rts => (
-      <TableCell>
+      <TableCell key={rts}>
         {row[rts]}
       </TableCell>
     ))}

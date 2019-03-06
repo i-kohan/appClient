@@ -4,9 +4,8 @@ import { Table } from '../../components'
 
 const ExercisesPage = ({
   getPageData,
-  exercises,
+  data,
   metadata,
-  count,
   loading,
 }) => (
   <div>
@@ -14,26 +13,29 @@ const ExercisesPage = ({
     <Table
       loading={loading}
       getPageData={getPageData}
-      rows={exercises}
-      rowsPerPage={5}
-      rowsToShow={metadata}
-      count={count}
+      rows={data}
+      rowsToShow={metadata.rowsToShow}
+      count={metadata.count}
       page={0}
+      rowsPerPage={5}
     />
   </div>
 )
 
 ExercisesPage.defaultProps = {
-  exercises: [],
-  metadata: [],
+  data: [],
+  metadata: {},
 }
 
 ExercisesPage.propTypes = {
   loading: PropTypes.bool.isRequired,
-  count: PropTypes.number.isRequired,
-  exercises: PropTypes.arrayOf(PropTypes.shape({ })),
+  data: PropTypes.arrayOf(PropTypes.shape({ })),
   getPageData: PropTypes.func.isRequired,
-  metadata: PropTypes.arrayOf(PropTypes.string),
+  metadata: PropTypes.shape({
+    rowsToShow: PropTypes.arrayOf(PropTypes.string),
+    accessor: PropTypes.string,
+    count: PropTypes.number,
+  }),
 }
 
 export default ExercisesPage
