@@ -1,12 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { compose, withProps } from 'recompose'
+import { compose, withProps, withState } from 'recompose'
 import { withQuery } from '../../graphql/hocs'
 import { exercises } from '../../graphql/queries'
 import ExercisesPage from './ExercisesPage'
 
-const ExercisesPageContainer = ({ data: { data, metadata }, loading, getPageData }) => (
+const ExercisesPageContainer = ({
+  data: { data, metadata },
+  loading,
+  getPageData,
+  handleViewModeChange,
+  viewMode,
+}) => (
   <ExercisesPage
+    handleViewModeChange={handleViewModeChange}
+    viewMode={viewMode}
     loading={loading}
     data={data}
     metadata={metadata}
@@ -23,6 +31,7 @@ ExercisesPageContainer.propTypes = {
 }
 
 export default compose(
+  withState('viewMode', 'setViewMode', 'table'),
   withProps({
     accessor: 'exercises',
   }),
@@ -46,5 +55,6 @@ export default compose(
         },
       })
     },
+    handleViewModeChange: (event, value) => props.setViewMode(value),
   })),
 )(ExercisesPageContainer)
