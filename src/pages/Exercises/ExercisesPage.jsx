@@ -7,7 +7,7 @@ import {
   withStyles,
   Button,
 } from '@material-ui/core'
-import { Table, Card } from '../../components'
+import { Table, Card, Dialog, Stepper } from '../../components'
 
 const styles = theme => ({
   root: {
@@ -29,9 +29,15 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
   },
+  execiseHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
 })
 
 const ExercisesPage = ({
+  isDialogOpened,
+  toggleDialog,
   getPageData,
   viewMode,
   handleViewModeChange,
@@ -41,20 +47,33 @@ const ExercisesPage = ({
   classes,
 }) => (
   <div className={classes.root}>
+    <Dialog
+      isDialogOpened={isDialogOpened}
+      toggleDialog={toggleDialog}
+      renderContent={() => ( // TODO no render prop
+        <Stepper />
+      )}
+    />
     <h1>Exercisess</h1>
-    <Paper square className={classes.tabsContainer}>
-      <Tabs
-        className={classes.tabs}
-        variant="fullWidth"
-        value={viewMode}
-        indicatorColor="primary"
-        textColor="primary"
-        onChange={handleViewModeChange}
-      >
-        <Tab label="Table mode" value="table" />
-        <Tab label="List Mode" value="list" />
-      </Tabs>
-    </Paper>
+    <div className={classes.execiseHeader}>
+      <Paper square className={classes.tabsContainer}>
+        <Tabs
+          className={classes.tabs}
+          variant="fullWidth"
+          value={viewMode}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={handleViewModeChange}
+        >
+          <Tab label="Table mode" value="table" />
+          <Tab label="List Mode" value="list" />
+        </Tabs>
+      </Paper>
+      <Button onClick={() => toggleDialog(true)}>
+          Create Exercise
+      </Button>
+    </div>
+
     {viewMode === 'table' ? (
       <Table
         loading={loading}

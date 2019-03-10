@@ -11,6 +11,8 @@ const ExercisesPageContainer = ({
   getPageData,
   handleViewModeChange,
   viewMode,
+  isDialogOpened,
+  toggleDialog,
 }) => (
   <ExercisesPage
     handleViewModeChange={handleViewModeChange}
@@ -19,6 +21,8 @@ const ExercisesPageContainer = ({
     data={data}
     metadata={metadata}
     getPageData={getPageData}
+    isDialogOpened={isDialogOpened}
+    toggleDialog={toggleDialog}
   />
 )
 
@@ -30,8 +34,9 @@ ExercisesPageContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
 }
 
-export default compose(
+export default compose( // TODO remove ExercisePageContainer (withFlatProps)
   withState('viewMode', 'setViewMode', 'table'),
+  withState('isDialogOpened', 'toggleDialog', false),
   withProps({
     accessor: 'exercises',
   }),
