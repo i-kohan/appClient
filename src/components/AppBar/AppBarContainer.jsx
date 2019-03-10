@@ -1,5 +1,3 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import {
   compose,
   withState,
@@ -11,42 +9,6 @@ import {
 } from '../../graphql/hocs'
 import { menuItems, currentUserQuery } from '../../graphql/queries'
 import AppBar from './AppBar'
-
-
-const AppBarContainer = ({
-  isMenuOpen,
-  handleMenuClose,
-  handleMenuToggle,
-  handleLogout,
-  loading,
-  data,
-}) => (
-  <AppBar
-    data={data}
-    loading={loading}
-    isMenuOpen={isMenuOpen}
-    handleMenuClose={handleMenuClose}
-    handleMenuToggle={handleMenuToggle}
-    handleLogout={handleLogout}
-  />
-)
-
-AppBarContainer.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  isMenuOpen: PropTypes.bool.isRequired,
-  handleMenuClose: PropTypes.func.isRequired,
-  handleMenuToggle: PropTypes.func.isRequired,
-  handleLogout: PropTypes.func.isRequired,
-  data: PropTypes.shape({
-    menuItems: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      path: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      iconName: PropTypes.string.isRequired,
-      __typename: PropTypes.string.isRequired,
-    })),
-  }).isRequired,
-}
 
 export default compose(
   withQuery({ query: menuItems }),
@@ -70,4 +32,4 @@ export default compose(
       props.toggleMenu(!props.isMenuOpen)
     },
   }),
-)(AppBarContainer)
+)(AppBar)

@@ -1,26 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { compose, withProps } from 'recompose'
 import { withQuery } from '../../graphql/hocs'
 import { programs } from '../../graphql/queries'
 import ProgramsPage from './ProgramsPage'
-
-const ProgramsPageContainer = ({ data: { data, metadata }, loading, getPageData }) => (
-  <ProgramsPage
-    loading={loading}
-    data={data}
-    metadata={metadata}
-    getPageData={getPageData}
-  />
-)
-
-ProgramsPageContainer.propTypes = {
-  data: PropTypes.shape({
-    exercises: PropTypes.array,
-  }).isRequired,
-  getPageData: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-}
 
 export default compose(
   withProps({
@@ -46,5 +27,7 @@ export default compose(
         },
       })
     },
+    data: props.data.data,
+    metadata: props.data.metadata,
   })),
-)(ProgramsPageContainer)
+)(ProgramsPage)

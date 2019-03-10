@@ -1,40 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { compose, withProps, withState } from 'recompose'
 import { withQuery } from '../../graphql/hocs'
 import { exercises } from '../../graphql/queries'
 import ExercisesPage from './ExercisesPage'
 
-const ExercisesPageContainer = ({
-  data: { data, metadata },
-  loading,
-  getPageData,
-  handleViewModeChange,
-  viewMode,
-  isDialogOpened,
-  toggleDialog,
-}) => (
-  <ExercisesPage
-    handleViewModeChange={handleViewModeChange}
-    viewMode={viewMode}
-    loading={loading}
-    data={data}
-    metadata={metadata}
-    getPageData={getPageData}
-    isDialogOpened={isDialogOpened}
-    toggleDialog={toggleDialog}
-  />
-)
-
-ExercisesPageContainer.propTypes = {
-  data: PropTypes.shape({
-    exercises: PropTypes.array,
-  }).isRequired,
-  getPageData: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-}
-
-export default compose( // TODO remove ExercisePageContainer (withFlatProps)
+export default compose(
   withState('viewMode', 'setViewMode', 'table'),
   withState('isDialogOpened', 'toggleDialog', false),
   withProps({
@@ -61,5 +30,7 @@ export default compose( // TODO remove ExercisePageContainer (withFlatProps)
       })
     },
     handleViewModeChange: (event, value) => props.setViewMode(value),
+    data: props.data.data,
+    metadata: props.data.metadata,
   })),
-)(ExercisesPageContainer)
+)(ExercisesPage)
