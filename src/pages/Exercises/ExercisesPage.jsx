@@ -41,6 +41,7 @@ const ExercisesPage = ({
   getPageData,
   viewMode,
   handleViewModeChange,
+  handleCreateExercise,
   data,
   metadata,
   loading,
@@ -71,6 +72,9 @@ const ExercisesPage = ({
       </Paper>
       <Button onClick={() => toggleDialog(true)}>
           Create Exercise
+      </Button>
+      <Button onClick={() => handleCreateExercise('Ad', 'hello')}>
+        Cr
       </Button>
     </div>
 

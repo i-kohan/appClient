@@ -50,9 +50,9 @@ function LoginPage(props) {
     classes,
     username,
     password,
-    onUsernameChange,
-    onPasswordChange,
-    onLogin,
+    handleUsernameChange,
+    handlePasswordChange,
+    handleLogin,
   } = props
   return (
     <main className={classes.main}>
@@ -72,7 +72,7 @@ function LoginPage(props) {
               name="username"
               autoFocus
               value={username}
-              onChange={({ target }) => onUsernameChange(target.value)}
+              onChange={({ target }) => handleUsernameChange(target.value)}
             />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
@@ -82,7 +82,7 @@ function LoginPage(props) {
               type="password"
               autoComplete="current-password"
               value={password}
-              onChange={({ target }) => onPasswordChange(target.value)}
+              onChange={({ target }) => handlePasswordChange(target.value)}
             />
           </FormControl>
           <FormControlLabel
@@ -94,7 +94,7 @@ function LoginPage(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => onLogin(username, password)}
+            onClick={() => handleLogin(username, password)}
           >
             Sign in
           </Button>
