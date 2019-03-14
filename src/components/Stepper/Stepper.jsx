@@ -11,7 +11,7 @@ import {
 
 const styles = theme => ({
   root: {
-    width: '90%',
+    width: '100%',
   },
   backButton: {
     marginRight: theme.spacing.unit,
@@ -20,33 +20,22 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
   },
+  stepsContent: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 })
-
-function getSteps() {
-  return ['Select master blaster campaign settings', 'Create an ad group', 'Create an ad']
-}
-
-function getStepContent(stepIndex) {
-  switch (stepIndex) {
-    case 0:
-      return 'Select campaign settings...'
-    case 1:
-      return 'What is an ad group anyways?'
-    case 2:
-      return 'This is the bit I really care about!'
-    default:
-      return 'Unknown stepIndex'
-  }
-}
 
 const Stepper = ({
   classes,
   activeStep,
   handleNext,
   handleBack,
-  handleReset
+  handleReset,
+  getStepContent,
+  steps,
+  onFinish,
 }) => {
-  const steps = getSteps()
   return (
     <div className={classes.root}>
       <StepperMaterial activeStep={activeStep} alternativeLabel>
@@ -56,7 +45,7 @@ const Stepper = ({
           </Step>
         ))}
       </StepperMaterial>
-      <div>
+      <div className={classes.stepsContent}>
         {activeStep === steps.length ? (
           <div>
             <Typography className={classes.instructions}>All steps completed</Typography>
@@ -73,7 +62,11 @@ const Stepper = ({
               >
                 Back
               </Button>
-              <Button variant="contained" color="primary" onClick={handleNext}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={activeStep === steps.length - 1 ? onFinish : handleNext}
+              >
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
             </div>

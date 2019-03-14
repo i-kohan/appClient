@@ -2,7 +2,7 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import { withStyles } from '@material-ui/core'
 import { compose } from 'recompose'
-import { Message, Loading } from '../../components'
+import { Message } from '../../components'
 
 const styles = () => ({
   progress: {
@@ -34,12 +34,6 @@ const withMutation = ({
       // client,
     }) => (
       <>
-        {loading && (
-          <Loading
-            type="circular"
-            className={props.classes.progress} // eslint-disable-line
-          />
-        )}
         {error && (
           <Message
             isOpen

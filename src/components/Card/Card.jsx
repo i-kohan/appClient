@@ -30,7 +30,6 @@ const Card = ({ classes, entity }) => (
         alt="Contemplative Reptile"
         className={classes.media}
         height="140"
-        src="https://www.youtube.com/embed/Nw5xaMknvBY?autoplay=1"
         title="Contemplative Reptile"
       />
       <CardContent>
