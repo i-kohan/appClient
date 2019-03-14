@@ -20,7 +20,7 @@ const styles = () => ({
 //   notifyOnNetworkStatusChange = false,
 // }
 
-const withQuery = queryProps => WrappedComponent => props => (
+const withQuery = queryProps => WrappedComponent => ({ accessor, ...props }) => (
   <Query {...queryProps}>
     {({
       loading,
@@ -29,41 +29,25 @@ const withQuery = queryProps => WrappedComponent => props => (
       data = {},
       fetchMore,
       networkStatus,
-    }) => {
-      const SubComponent = ({ accessor, ...restProps }) => (
+    }) => (
+      <>
+        {error && (
+          <Message
+            isOpen
+            message={error.message}
+            variant="error"
+          />
+        )}
         <WrappedComponent
-          networkStatus={networkStatus}
+          {...props}
           loading={loading}
-          fetchMore={fetchMore}
-          error={error}
-          data={accessor ? data[accessor] || {} : data}
           client={client}
-          {...restProps}
+          fetchMore={fetchMore}
+          networkStatus={networkStatus}
+          data={accessor ? data[accessor] || {} : data}
         />
-      )
-
-      SubComponent.propTypes = {
-        accessor: PropTypes.string,
-      }
-
-      SubComponent.defaultProps = {
-        accessor: null,
-      }
-
-      return (
-        <>
-          {error && (
-            <Message
-              isOpen
-              message={error.message}
-              variant="error"
-            />
-          )}
-          <SubComponent {...props} />
-        </>
-      )
-    }
-  }
+      </>
+    )}
   </Query>
 )
 

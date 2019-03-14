@@ -8,6 +8,7 @@ import {
   Button,
 } from '@material-ui/core'
 import { Table, Card, Dialog, Stepper } from '../../components'
+import CreateExercisePage from './CreateExercisePage'
 
 const styles = theme => ({
   root: {
@@ -48,12 +49,10 @@ const ExercisesPage = ({
   classes,
 }) => (
   <div className={classes.root}>
-    <Dialog
+    <CreateExercisePage
+      handleCreateExercise={handleCreateExercise}
       isDialogOpened={isDialogOpened}
       toggleDialog={toggleDialog}
-      renderContent={() => ( // TODO no render prop
-        <Stepper />
-      )}
     />
     <h1>Exercisess</h1>
     <div className={classes.execiseHeader}>
@@ -72,9 +71,6 @@ const ExercisesPage = ({
       </Paper>
       <Button onClick={() => toggleDialog(true)}>
           Create Exercise
-      </Button>
-      <Button onClick={() => handleCreateExercise('Ad', 'hello')}>
-        Cr
       </Button>
     </div>
 
