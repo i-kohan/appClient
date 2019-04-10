@@ -1,1 +1,4 @@
-export { default as Dialog } from './Dialog'
+export {
+  DialogProvider as Dialog,
+  DialogConsumer,
+} from './DialogProvider'

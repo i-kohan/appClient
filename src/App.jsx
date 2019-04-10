@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core'
 import { compose } from 'recompose'
-import { AppBar } from './components'
+import { AppBar, Dialog } from './components'
 import { withQuery } from './graphql/hocs'
 import { currentUserQuery } from './graphql/queries'
 import {
@@ -26,11 +26,13 @@ const App = ({ classes, data: { currentUser }, loading }) => {
   }
   return (
     <div className={classes.root}>
-      {currentUser ? (
-        <AppAuthenticated />
-      ) : (
-        <AppNotAuthenticated />
-      )}
+      <Dialog>
+        {currentUser ? (
+          <AppAuthenticated />
+        ) : (
+          <AppNotAuthenticated />
+        )}
+      </Dialog>
     </div>
   )
 }

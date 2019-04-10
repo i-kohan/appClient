@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Formik, Form } from 'formik'
 import {
   Dialog as DialogMaterial,
   AppBar,
@@ -13,6 +14,7 @@ import {
 import {
   Close as CloseIcon,
 } from '@material-ui/icons'
+import { buildInputs } from '../Inputs'
 
 const Transition = props => (
   <Slide direction="up" {...props} />
@@ -27,42 +29,68 @@ const styles = () => ({
   },
 })
 
+const renderContent = (fields, loading) => {
+  return (
+    <Formik
+      initialValues={{ name: '', description: '' }}
+      validate={(values) => {
+        const errors = {}
+        if (!values.name) {
+          errors.name = 'Required'
+        }
+        if (!values.description) {
+          errors.description = 'Required'
+        }
+        return errors
+      }}
+    >
+      {props => (
+        <Form>
+          {!loading && buildInputs({ fields, ...props })}
+        </Form>
+      )}
+    </Formik>
+  )
+}
+
 const Dialog = ({
-  isDialogOpened,
-  toggleDialog,
+  isOpen,
+  closeDialog,
   classes,
-  renderContent
+  data: { fields },
+  loading,
 }) => (
   <DialogMaterial
     fullScreen
-    open={isDialogOpened}
-    onClose={() => toggleDialog(false)}
+    open={isOpen}
+    onClose={closeDialog}
     TransitionComponent={Transition}
   >
     <AppBar className={classes.appBar}>
       <Toolbar>
-        <IconButton color="inherit" onClick={() => toggleDialog(false)} aria-label="Close">
+        <IconButton color="inherit" onClick={closeDialog} aria-label="Close">
           <CloseIcon />
         </IconButton>
         <Typography variant="h6" color="inherit" className={classes.flex}>
           Sound
         </Typography>
-        <Button color="inherit" onClick={() => toggleDialog(false)}>
+        <Button color="inherit" onClick={closeDialog}>
           save
         </Button>
       </Toolbar>
     </AppBar>
-    {renderContent()}
+    {renderContent(fields, loading)}
   </DialogMaterial>
 )
 
+
 Dialog.defaultProps = {
-  isDialogOpened: false,
+  isOpen: false,
 }
 
 Dialog.propTypes = {
-  isDialogOpened: PropTypes.bool,
-  toggleDialog: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool,
+  closeDialog: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired, // eslint-disable-line
 }
 

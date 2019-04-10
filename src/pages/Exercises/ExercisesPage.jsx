@@ -7,8 +7,8 @@ import {
   withStyles,
   Button,
 } from '@material-ui/core'
-import { Table, Card, Dialog, Stepper } from '../../components'
-import CreateExercisePage from './CreateExercisePage'
+import { Table, Card, Dialog, Stepper, DialogConsumer } from '../../components'
+import { exerciseCreation } from '../../graphql/queries'
 
 const styles = theme => ({
   root: {
@@ -49,11 +49,6 @@ const ExercisesPage = ({
   classes,
 }) => (
   <div className={classes.root}>
-    <CreateExercisePage
-      handleCreateExercise={handleCreateExercise}
-      isDialogOpened={isDialogOpened}
-      toggleDialog={toggleDialog}
-    />
     <h1>Exercisess</h1>
     <div className={classes.execiseHeader}>
       <Paper square className={classes.tabsContainer}>
@@ -69,9 +64,16 @@ const ExercisesPage = ({
           <Tab label="List Mode" value="list" />
         </Tabs>
       </Paper>
-      <Button onClick={() => toggleDialog(true)}>
-          Create Exercise
-      </Button>
+      <DialogConsumer>
+        {({ openDialog, setQuery, mutation }) => {
+          setQuery(exerciseCreation)
+          return (
+            <Button onClick={openDialog}>
+                Create Exercise
+            </Button>
+          )
+        }}
+      </DialogConsumer>
     </div>
 
     {viewMode === 'table' ? (

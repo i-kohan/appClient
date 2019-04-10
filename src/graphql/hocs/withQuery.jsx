@@ -1,57 +1,51 @@
 import React from 'react'
 import { Query } from 'react-apollo'
-import { withStyles } from '@material-ui/core'
-import { compose } from 'recompose'
-import PropTypes from 'prop-types'
 import { Message } from '../../components'
 
-const styles = () => ({
-  progress: {
-    position: 'absolute',
-    top: 70,
-    left: 'calc(50% - 40px)',
-    width: '100%',
-  },
-})
+const mapProps = (queryProps, props) => {
+  const query = typeof queryProps.query === 'function' ? queryProps.query(props) : queryProps.query
+  return {
+    ...props,
+    query,
+    skip: !query,
+  }
+}
 
-// withQueryProps = {
-//   query,
-//   variables,
-//   notifyOnNetworkStatusChange = false,
-// }
-
-const withQuery = queryProps => WrappedComponent => ({ accessor, ...props }) => (
-  <Query {...queryProps}>
-    {({
-      loading,
-      error,
-      client,
-      data = {},
-      fetchMore,
-      networkStatus,
-    }) => (
-      <>
-        {error && (
-          <Message
-            isOpen
-            message={error.message}
-            variant="error"
+const withQuery = queryProps => WrappedComponent => (props = {}) => {
+  const qProps = mapProps(queryProps, props)
+  if (!qProps.query) {
+    return null
+  }
+  return (
+    <Query {...qProps}>
+      {({
+        loading,
+        error,
+        client,
+        data = {},
+        fetchMore,
+        networkStatus,
+      }) => (
+        <>
+          {error && (
+            <Message
+              isOpen
+              message={error.message}
+              variant="error"
+            />
+          )}
+          <WrappedComponent
+            {...props}
+            loading={loading}
+            client={client}
+            fetchMore={fetchMore}
+            networkStatus={networkStatus}
+            data={props.accessor ? data[props.accessor] || {} : data}
           />
-        )}
-        <WrappedComponent
-          {...props}
-          loading={loading}
-          client={client}
-          fetchMore={fetchMore}
-          networkStatus={networkStatus}
-          data={accessor ? data[accessor] || {} : data}
-        />
-      </>
-    )}
-  </Query>
-)
+        </>
+      )}
+    </Query>
+  )
+}
 
-export default props => component => compose(
-  withStyles(styles),
-  withQuery(props),
-)(component)
+export default withQuery
