@@ -5,13 +5,18 @@ import {
 
 const TextInput = ({
   field,
-  form: { touched, errors },
-  ...props,
+  touched,
+  errors,
+  values,
+  handleChange,
+  ...props
 }) => {
   return (
     <TextField
-      {...props}
-      error={errors[field.name]}
+      value={values[field.accessor]}
+      onChange={handleChange}
+      error={errors[field.accessor]}
+      name={field.accessor}
     />
   )
 }

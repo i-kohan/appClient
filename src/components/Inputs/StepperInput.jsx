@@ -2,8 +2,8 @@ import React from 'react'
 import { Stepper } from '../Stepper'
 import { buildInputs } from './index'
 
-const getStepContent = (fields) => (activeStep) => {
-  return buildInputs({ fields: fields[activeStep].inputs })
+const getStepContent = (fields, props) => (activeStep) => {
+  return buildInputs({ ...props, fields: fields[activeStep].inputs })
 }
 
 const getSteps = (fields) => {
@@ -11,14 +11,14 @@ const getSteps = (fields) => {
 } 
 
 const StepperInput = ({
-  fields,
+  field,
   form,
   ...props,
 }) => {
   return (
     <Stepper
-      steps={getSteps(fields)}
-      getStepContent={getStepContent(fields)}
+      steps={getSteps(field.fields)}
+      getStepContent={getStepContent(field.fields, props)}
     />
   )
 }

@@ -10,6 +10,6 @@ export const inputs = {
 export const buildInputs = ({ fields, ...props }) => fields.map((f) => {
   const Input = inputs[f.fieldType]
   return (
-    <Input {...f} {...props} />
+    <Input field={f} {...props} />
   )
 })
